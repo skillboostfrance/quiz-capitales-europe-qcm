@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz des Capitales d'Europe</title>
+  <title>Quiz des Capitaees d'Europe</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -53,138 +53,8 @@
   </style>
 </head>
 <body>
-  <h1>Quiz des Capitales d'Europe</h1>
-  <div id="quiz">
-    <img id="flag" src="" alt="Drapeau du pays">
-    <div class="question" id="question"></div>
-    <div class="choices" id="choices"></div>
-    <div class="feedback" id="feedback"></div>
-    <button id="nextBtn" onclick="nextQuestion()">Question suivante</button>
-  </div>
-
-  <script>
-    const countries = [
-      { name: "France", capital: "Paris" },
-      { name: "Belgique", capital: "Bruxelles" },
-      { name: "Luxembourg", capital: "Luxembourg" },
-      { name: "Allemagne", capital: "Berlin" },
-      { name: "Suisse", capital: "Berne" },
-      { name: "Italie", capital: "Rome" },
-      { name: "Espagne", capital: "Madrid" },
-      { name: "Monaco", capital: "Monaco" },
-      { name: "Andorre", capital: "Andorre-la-Vieille" },
-      { name: "Pays-Bas", capital: "Amsterdam" },
-      { name: "Liechtenstein", capital: "Vaduz" },
-      { name: "Autriche", capital: "Vienne" },
-      { name: "Royaume-Uni", capital: "Londres" },
-      { name: "République Tchèque", capital: "Prague" },
-      { name: "Slovénie", capital: "Ljubljana" },
-      { name: "Croatie", capital: "Zagreb" },
-      { name: "Danemark", capital: "Copenhague" },
-      { name: "Slovaquie", capital: "Bratislava" },
-      { name: "Hongrie", capital: "Budapest" },
-      { name: "Irlande", capital: "Dublin" },
-      { name: "Malte", capital: "La Valette" },
-      { name: "Pologne", capital: "Varsovie" },
-      { name: "Saint-Marin", capital: "Saint-Marin" },
-      { name: "Vatican", capital: "Cité du Vatican" },
-      { name: "Serbie", capital: "Belgrade" },
-      { name: "Bosnie-Herzégovine", capital: "Sarajevo" },
-      { name: "Monténégro", capital: "Podgorica" },
-      { name: "Macédoine du Nord", capital: "Skopje" },
-      { name: "Kosovo", capital: "Pristina" },
-      { name: "Albanie", capital: "Tirana" },
-      { name: "Portugal", capital: "Lisbonne" },
-      { name: "Grèce", capital: "Athènes" },
-      { name: "Bulgarie", capital: "Sofia" },
-      { name: "Roumanie", capital: "Bucarest" },
-      { name: "Chypre", capital: "Nicosie" },
-      { name: "Estonie", capital: "Tallinn" },
-      { name: "Lettonie", capital: "Riga" },
-      { name: "Lituanie", capital: "Vilnius" },
-      { name: "Moldavie", capital: "Chisinau" },
-      { name: "Ukraine", capital: "Kiev" },
-      { name: "Norvège", capital: "Oslo" },
-      { name: "Suède", capital: "Stockholm" },
-      { name: "Finlande", capital: "Helsinki" },
-      { name: "Islande", capital: "Reykjavik" },
-      { name: "Biélorussie", capital: "Minsk" },
-      { name: "Géorgie", capital: "Tbilissi" }
-    ];
-
-    let currentIndex = 0;
-    let quizOrder = shuffle([...countries]);
-
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
-    function loadQuestion() {
-      document.getElementById('feedback').textContent = "";
-      document.getElementById('nextBtn').style.display = "none";
-      const question = quizOrder[currentIndex];
-      document.getElementById('question').textContent = `Quelle est la capitale de ${question.name} ?`;
-
-      const flagSrc = `https://flagcdn.com/w80/${getCountryCode(question.name)}.png`;
-      document.getElementById('flag').src = flagSrc;
-
-      const choices = shuffle(generateChoices(question));
-      const container = document.getElementById('choices');
-      container.innerHTML = "";
-
-      choices.forEach(choice => {
-        const btn = document.createElement('button');
-        btn.textContent = choice;
-        btn.onclick = () => checkAnswer(choice, question.capital);
-        container.appendChild(btn);
-      });
-    }
-
-    function generateChoices(question) {
-      const incorrect = shuffle(countries.filter(c => c.capital !== question.capital)).slice(0, 2);
-      return [question.capital, ...incorrect.map(c => c.capital)];
-    }
-
-    function checkAnswer(selected, correct) {
-      const feedback = document.getElementById('feedback');
-      if (selected === correct) {
-        feedback.textContent = "✅ Bonne réponse !";
-        feedback.style.color = "green";
-      } else {
-        feedback.textContent = `❌ Mauvaise réponse. La bonne réponse est : ${correct}`;
-        feedback.style.color = "red";
-      }
-      document.getElementById('nextBtn').style.display = "inline-block";
-    }
-
-    function nextQuestion() {
-      currentIndex++;
-      if (currentIndex < quizOrder.length) {
-        loadQuestion();
-      } else {
-        document.getElementById('quiz').innerHTML = "<h2>🎉 Vous avez terminé le quiz !</h2>";
-      }
-    }
-
-    function getCountryCode(name) {
-      const mapping = {
-        "France": "fr", "Belgique": "be", "Luxembourg": "lu", "Allemagne": "de",
-        "Suisse": "ch", "Italie": "it", "Espagne": "es", "Monaco": "mc",
-        "Andorre": "ad", "Pays-Bas": "nl", "Liechtenstein": "li", "Autriche": "at",
-        "Royaume-Uni": "gb", "République Tchèque": "cz", "Slovénie": "si",
-        "Croatie": "hr", "Danemark": "dk", "Slovaquie": "sk", "Hongrie": "hu",
-        "Irlande": "ie", "Malte": "mt", "Pologne": "pl", "Saint-Marin": "sm",
-        "Vatican": "va", "Serbie": "rs", "Bosnie-Herzégovine": "ba",
-        "Monténégro": "me", "Macédoine du Nord": "mk", "Kosovo": "xk", "Albanie": "al",
-        "Portugal": "pt", "Grèce": "gr", "Bulgarie": "bg", "Roumanie": "ro",
-        "Chypre": "cy", "Estonie": "ee", "Lettonie": "lv", "Lituanie": "lt",
-        "Moldavie": "md", "Ukraine": "ua", "Norvège": "no", "Suède": "se",
-        "Finlande": "fi", "Islande": "is", "Biélorussie": "by", "Géorgie": "ge"
-      };
-      return mapping[name] || "eu";
-    }
-
-    loadQuestion();
-  </script>
+  <h1>Ceci est un test et si tu vois ça c'est que j'ai réussi !</h1>
+  
 </body>
 </html>
+
